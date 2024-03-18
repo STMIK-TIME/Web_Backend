@@ -14,5 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home', [
+        "app_name" => env('APP_NAME'),
+        "copyright" => "2024",
+        "title" => "Home",
+    ]) ;
+});
+
+Route::get('/about', function () {
+    return "hello word";
+});
+
+Route::get('/login', function () {
+    return "hello word";
+});
+
+Route::get('/register', function () {
+    return "hello word";
 });
