@@ -100,7 +100,7 @@ class UserTest extends TestCase
                 ]
             ]);
     }
-
+  
     public function testLoginFailedPassword()
     {
         $this->testRegisterSuccess();
