@@ -23,7 +23,8 @@ Route::group(['prefix'=>'v1'],function(){
 
     Route::middleware(App\Http\Middleware\ApiAuthMiddleware::class)->group(function (){
         Route::get('/users/profile',[App\Http\Controllers\UserController::class,'get']);
-        route::patch('/users/profile',[App\Http\Controllers\UserController::class,'update']);
+        Route::patch('/users/profile',[App\Http\Controllers\UserController::class,'update']);
+        Route::delete('/users/logout',[App\Http\Controllers\UserController::class,'logout']);
     });
 });
 
