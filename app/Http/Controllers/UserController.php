@@ -71,4 +71,18 @@ class UserController extends Controller
             "data" => true
         ])->setStatusCode(200);
     }
+
+    public function getContacts(Request $request): JsonResponse
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Eager load contacts for the user
+        $user->load('contacts');
+
+        // Return user data with contacts
+        return response()->json([
+            "data" => $user
+        ])->setStatusCode(200);
+    }
 }

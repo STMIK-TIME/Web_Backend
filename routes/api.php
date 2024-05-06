@@ -23,9 +23,12 @@ Route::group(['prefix'=>'v1'],function(){
 
     Route::middleware(App\Http\Middleware\ApiAuthMiddleware::class)->group(function (){
         Route::get('/users/profile',[App\Http\Controllers\UserController::class,'get']);
+        Route::get('/users/profile/contacts',[App\Http\Controllers\UserController::class,'getContacts']);
         Route::patch('/users/profile',[App\Http\Controllers\UserController::class,'update']);
         Route::delete('/users/logout',[App\Http\Controllers\UserController::class,'logout']);
     });
+
+    Route::get('/contacts/{id}', [App\Http\Controllers\ContactsController::class, 'get']);
 });
 
 
