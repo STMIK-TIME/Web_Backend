@@ -19,6 +19,17 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'remember_token' => $this->whenNotNull($this->remember_token),
+            'jwt_token' => $this->respondWithToken()
         ];
+    }
+
+    protected function respondWithToken()
+    {
+        $token = auth()->refresh();
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
     }
 }

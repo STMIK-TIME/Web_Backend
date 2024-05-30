@@ -17,6 +17,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
+
     public function register(UserRegisterRequest $request): JsonResponse
     {
         $user = User::create($request->validated());
@@ -27,15 +28,16 @@ class UserController extends Controller
     public function login(UserLoginRequest $request): UserResource
     {
         $data = $request->validated();
-        $user = User::where('email', $data['email'])->first();
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        $credentials = request(['email', 'password']);
+        $token = auth()->attempt($credentials);
+        if (!$token)
             throw new HttpResponseException (response([
                 'errors' => [
                     'message' => ['username or password wrong'],
-                ]
-            ],401));
-        }
-
+                    ]
+                ],401));
+                
+        $user = User::where('email', $data['email'])->first();
         $user->remember_token = Str::uuid()->toString();
         $user->save();
         return new UserResource($user);
